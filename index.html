@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UML Class Diagram - Digital Library System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .uml-container {
+            max-width: 100%;
+            overflow-x: auto;
+            display: flex;
+            justify-content: center;
+        }
+        .diagram {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            min-height: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .class-box {
+            position: absolute;
+            border: 2px solid #1a1a1a;
+            background-color: #ffffff;
+            width: 305px;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.15);
+        }
+        .member-class {
+            left: 55px;
+            top: 150px;
+        }
+        .book-class {
+            right: 55px;
+            top: 150px;
+        }
+        .class-header {
+            background-color: #e6f2ff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 16px;
+        }
+        .class-compartment {
+            padding: 12px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .class-compartment:last-child {
+            border-bottom: none;
+        }
+        .attribute, .method {
+            margin: 8px 0;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        /* Relationship line */
+        .relationship {
+            position: absolute;
+            top: 200px;
+            left: 370px;
+            width: 200px;
+            height: 2px;
+            background-color: #1a1a1a;
+        }
+        /* Cardinality labels */
+        .cardinality-one {
+            position: absolute;
+            top: 175px;
+            left: 365px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .cardinality-many {
+            position: absolute;
+            top: 175px;
+            right: 365px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        /* Diamond for aggregation */
+        .diamond {
+            position: absolute;
+            top: 194px;
+            left: 365px;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border: 2px solid #1a1a1a;
+            transform: rotate(45deg);
+        }
+
+        /* Title */
+        .diagram-title {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            left: 0;
+        }
+        /* Visibility symbols */
+        .visibility-private:before {
+            content: "- ";
+        }
+        .visibility-public:before {
+            content: "+ ";
+        }
+        /* Relationship label */
+        .relationship-label {
+            position: absolute;
+            top: 170px;
+            left: 430px;
+            font-size: 14px;
+            background-color: white;
+            padding: 2px 5px;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .diagram {
+                width: 100%;
+                min-height: 700px;
+            }
+            .member-class {
+                left: 50%;
+                transform: translateX(-50%);
+                top: 120px;
+            }
+            .book-class {
+                left: 50%;
+                transform: translateX(-50%);
+                top: 350px;
+            }
+            .relationship {
+                top: 300px;
+                left: 50%;
+                transform: translateX(-50%) rotate(90deg);
+                transform-origin: center;
+                width: 100px;
+            }
+            .diamond {
+                top: 295px;
+                left: 50%;
+                transform: translateX(-50%) rotate(45deg);
+            }
+            .cardinality-one {
+                top: 280px;
+                left: 45%;
+            }
+            .cardinality-many {
+                top: 310px;
+                left: 45%;
+            }
+            .relationship-label {
+                top: 290px;
+                left: 55%;
+            }
+            .note {
+                width: 90%;
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="uml-container">
+        <div class="diagram">
+            <div class="diagram-title">Digital Library System: Class Diagram</div>
+            
+            <!-- Member Class -->
+            <div class="class-box member-class">
+                <div class="class-header">Member</div>
+                <div class="class-compartment">
+                    <div class="attribute visibility-private">memberID: String</div>
+                    <div class="attribute visibility-private">name: String</div>
+                    <div class="attribute visibility-private">borrowedBooks: Book[0..3]</div>
+                </div>
+                <div class="class-compartment">
+                    <div class="method visibility-public">getBorrowedCount(): Integer</div>
+                    <div class="method visibility-public">canBorrow(): Boolean</div>
+                    <div class="method visibility-public">addBook(book: Book): Boolean</div>
+                </div>
+            </div>
+            
+            <!-- Book Class -->
+            <div class="class-box book-class">
+                <div class="class-header">Book</div>
+                <div class="class-compartment">
+                    <div class="attribute visibility-private">bookID: String</div>
+                    <div class="attribute visibility-private">title: String</div>
+                    <div class="attribute visibility-private">status: String {available, borrowed}</div>
+                    <div class="attribute visibility-private">borrower: Member[0..1]</div>
+                </div>
+                <div class="class-compartment">
+                    <div class="method visibility-public">borrow(member: Member): Boolean</div>
+                    <div class="method visibility-public">isAvailable(): Boolean</div>
+                    <div class="method visibility-public">return(): Boolean</div>
+                </div>
+            </div>
+            
+            <!-- Relationship -->
+            <div class="relationship"></div>
+            <div class="diamond"></div>
+            <div class="cardinality-one">1</div>
+            <div class="cardinality-many">0..3</div>
+            <div class="relationship-label">borrows</div>
+            
+        </div>
+    </div>
+</body>
+</html>
